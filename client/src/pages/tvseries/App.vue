@@ -1,19 +1,9 @@
 <template>
   <div id="app">
-    <!-- Navigation bar -->
     <b-navbar toggleable="md" type="dark" variant="dark" class="navbar">
-      <b-navbar-brand>MovieDB</b-navbar-brand>
-      <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-text-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item>Movies</b-nav-item>
-          <b-nav-item>TV Series</b-nav-item>
+        <b-navbar-nav class="ml-auto col-md-12">
+          <b-form-input size="sm" class="mr-sm" v-model="search" placeholder="Search Series"></b-form-input>
         </b-navbar-nav>
-
-        <b-navbar-nav class="ml-auto col-md-5">
-          <b-form-input size="sm" class="mr-sm" v-model="search" placeholder="Search Movies"></b-form-input>
-        </b-navbar-nav>
-      </b-collapse>
     </b-navbar>
 
     <b-container>
@@ -31,17 +21,12 @@
         </b-col>
       </b-row>
     </b-container>
-
-    <div v-bind:key="review._id" v-for="review in reviews">
-      {{review._id}} -- {{review.review}}
-    </div>
-
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import MovieComponent from './components/MovieComponent.vue'
+import MovieComponent from '../../components/MovieComponent.vue'
 
 export default {
   name: "app",
@@ -97,7 +82,7 @@ export default {
     },
     loadMovies(pageNo = 1){
       let self = this;
-      axios.get('http://localhost:5000/api/imdb/movies', {
+      axios.get('http://localhost:5000/api/imdb/series', {
         params: {
           pageNo
         }
@@ -111,7 +96,7 @@ export default {
     },
     loadMoreMovies(pageNo){
       let self = this;
-      axios.get('http://localhost:5000/api/imdb/movies', {
+      axios.get('http://localhost:5000/api/imdb/series', {
         params: {
           pageNo
         }

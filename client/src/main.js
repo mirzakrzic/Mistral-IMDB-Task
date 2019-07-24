@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
+import MovieApp from './pages/movies/App.vue'
+import SeriesApp from './pages/tvseries/App.vue'
 
 import BootstrapVue from 'bootstrap-vue'
 import StarRating from 'vue-star-rating'
@@ -16,5 +17,9 @@ Vue.component('star-rating', StarRating);
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  render: h => h(MovieApp),
 }).$mount('#app')
+
+new Vue({
+  render: b => b(SeriesApp),
+}).$mount('#app1')

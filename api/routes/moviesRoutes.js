@@ -54,10 +54,13 @@ router.get('/movies/:product_id', (req, res) => {
 //Get all series
 router.get('/series', (req, res) => {
     let series = [];
+    let pageNo = parseInt(req.query.pageNo) || 1;
+    let size = parseInt(req.query.size) || 10;
+    let query = {};
     mongodb.connect(url, (err, client) =>{
         assert.equal(null, err);
         const db = client.db('mistral-imdb-task');
-        let seriesTemp = db.collection('serije').find();
+        let seriesTemp = db.collection('serije').find().skip((pageNo - 1) * size).limit(size);
         seriesTemp.forEach(function(doc, err){
             assert.equal(null, err);
             series.push(doc);

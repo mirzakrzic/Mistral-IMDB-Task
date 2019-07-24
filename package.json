@@ -4,7 +4,7 @@
   "description": "A IMDB look-alike application. Mistral job applicaion task.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js"
+    "start": "nodemon api/index.js"
   },
   "repository": {
     "type": "git",

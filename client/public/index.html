@@ -6,13 +6,49 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>client</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but client doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
-    <div id="app"></div>
+    
+    <ul class="nav nav-tabs navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="navbar-brand">ReMovie</div>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#movies">Movies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#series">Series</a>
+      </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane fade show active" id="movies">
+          <div id="app" ></div>
+      </div>
+      <div class="tab-pane fade show" id="series">
+          <div id="app1" ></div>
+      </div>
+    </div>  
+    
     <!-- built files will be auto injected -->
   </body>
 </html>
+<style type="text/css">
+  .navbar {
+    margin-bottom: 0 !important;
+    border: 0;
+  }
+
+  a {
+    color: #fff;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .nav-item  {
+      margin-right: 0 !important;
+    }
+  }
+
+</style>
