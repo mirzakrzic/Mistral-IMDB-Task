@@ -16,10 +16,13 @@ router.post('/', (req, res) => {
 //Get all movies
 router.get('/movies', (req, res) => {
     let movies = [];
+    let pageNo = parseInt(req.query.pageNo) || 1;
+    let size = parseInt(req.query.size) || 10;
+    let query = {};
     mongodb.connect(url, (err, client) => {
         assert.equal(null, err);
         const db = client.db('mistral-imdb-task');
-        let moviesTemp = db.collection('filmovi').find();
+        let moviesTemp = db.collection('filmovi').find().skip((pageNo - 1) * size).limit(size);
         moviesTemp.forEach(function(doc, err){
             assert.equal(null, err);
             movies.push(doc);
@@ -91,10 +94,32 @@ router.get('/reviews', (req, res) => {
     mongodb.connect(url, (err, client) =>{
         assert.equal(null, err);
         const db = client.db('mistral-imdb-task');
-        let reviewsTemp = db.collection('reviews').find();
+        let reviewsTemp = db.collection('reviews').aggregate([
+            {"$match": {}},
+            {"$group": {_id: "$product_id", review: {"$avg": "$review"}}}
+        ]);
         reviewsTemp.forEach(function(doc, err){
             assert.equal(null, err);
             reviews.push(doc);
+        }, function() {
+            client.close();
+            res.send(reviews);
+        });
+    });
+});
+
+//Get reviews by id
+router.get('/reviews/:product_id', (req, res) => {
+    let reviews = [];
+    mongodb.connect(url, (err, client) => { 
+        assert.equal(null, err);
+        const db = client.db('mistral-imdb-task');
+        let reviewsTemp = db.collection('reviews').find();
+        reviewsTemp.forEach(function(doc, err){
+            assert.equal(null, err);
+            if (doc.product_id == parseInt(req.params.product_id)) {
+               reviews.push(doc); 
+            }
         }, function() {
             client.close();
             res.send(reviews);
